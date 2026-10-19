@@ -21,48 +21,91 @@
 
 
 ## 使った文法・技術
-検証、添削予定
 
-1. グラフィックス・描画技術（自前3Dエンジン）
-外部の3Dライブラリを使わず、2Dベクター描画機能を使って疑似3D空間を構築しています。
-• SwiftUI Canvas による高速描画
-奥行きのある3Dダンジョン、およびリアルタイムに変化するオートマップの描画に、毎フレームの描画パフォーマンスが非常に高い Canvas（即時描画モード） を採用しています。
-• 透視投影（パースペクティブ）の自作アルゴリズム
-3次元の座標（X：横、Y：高さ、Z：奥行き）を、「Z（奥行き）で割り算する」という数学的計算によってスマホの2D画面座標（x, y）に落とし込んでいます。これにより、奥の壁ほど小さく見える遠近法をプログラムだけで実現しています。
-• 画家のアルゴリズム（Painter's Algorithm）と隠面消去
-壁の線の重なりが崩れないよう、「奥から手前へ」「外側から中央へ」の順番（lateralOrder）で四角形（Path）を真っ黒に塗りつぶしてから白線を引いています。これにより、手前の壁が奥の線を完璧に覆い隠すグラフィックス技術を成立させています。
-• オクルージョン・カリング（正面壁判定）
-正面を見て壁にぶつかる手前までの深さをループ処理（while）で事前計算し、見えない奥の壁の計算をスキップする無駄のない処理を行っています。
-2. アーキテクチャと状態管理技術（SwiftUI × Combine）
-データの流れが一方通行になるよう、モダンな MVI / MVVM パターン に近い設計が施されています。
-• 単一データソース（Single Source of Truth）
-ゲーム全体の画面遷移は AppFlow、プレイ中の移動やイベントは GameManager、具体的なデータは GameState と、役割が厳密に分離されています。
-• ObservableObject と @Published によるリアクティブプログラミング
-Combineフレームワークのコア技術を使用しています。プレイヤーの移動や鍵の取得によって @Published の状態（State）が変わると、SwiftUIがそれを検知して DungeonView や AutoMapView に値を直接流し込み、一瞬で画面を再描画 させています。
-• 不変性（Immutable）と値型（struct）の安全設計
-GameState や位置情報（GridPos）などはすべて struct（値型） で管理されています。状態を変更する際は var newState = state のように一度完全にデータを複製（コピー）してから書き換える手法を取ることで、意図しないデータの書き換えバグを100%防ぐ安全な設計になっています。
-3. アルゴリズムとデータ構造
-限られた情報（文字列のマップ定義）から、ゲームに必要なデータを高速に処理する技術です。
-• 二次元配列（[[MapCell]]）による空間管理
-文字列の配列から MapLoader を通して MapCell の二次元配列を生成し、グリッド上のマス目を管理しています。
-• Set（集合型）と Hashable プロトコルによる高速な探索判定
-探索済みのマス（explored）の管理に、配列ではなく重複を許さない Set を使用しています。これに伴い、GridPos に Hashable を適用させることで、何歩歩いても「このマスは探索済みか？」のチェックを瞬時（O(1) の計算量）に完了させています。
-• 列挙型（enum）の数位（Raw Value）を応用した方位・回転計算
-方角（Direction）を 0〜3 の数値と紐付けることで、左旋回は (rawValue + 3) % 4、180度反転（トラップ）は (rawValue + 2) % 4 という、分岐（if文）を使わないわずか1行の算術計算 でスマートに処理しています。
-4. オブジェクト指向とチーム開発の技術
-3人の開発者（A・B・C）が、お互いのコードを干渉せずに並行開発するための工夫です。
-• プロトコル（protocol）による抽象化（ポリモーフィズム）
-protocol TileEvent を定義し、「進入制限の有無（blockReason）」と「進入時の効果（onEnter）」という共通のインターフェース（窓口）を作っています。
-• 責務の分離と拡張性
-A担当のコアロジック（GameManager）は、マスの種類に応じて event?.onEnter(state: &newState) を呼び出すだけで、具体的な中身は知りません。これにより、B担当のトラップ（TrapEvent）やC担当の鍵（KeyEvent）の内容がどれだけ変わっても、A担当のコアコードを1行も汚さずにイベントを合体・拡張できるクリーンな設計 になっています。
-5. UI（レイアウト）制御技術
-あらゆる端末の画面サイズでレイアウトが崩れないためのモバイルアプリ技術です。
-• ZStack と .overlay によるモーダル制御
-ギブアップ確認画面やクリア画面を表示する際、画面全体を覆う黒い背景（Color.black.opacity）を重ねることで、「表示中は後ろのプレイ画面の操作を完全にロックする」 という安全なユーザー動線を作っています。
-• コンポーネントの共通化と再利用
-CommandView や GiveUpConfirmView などのボタン（背景が黒、文字が白、白い太枠線）のデザインを、関数（commandButton）やプライベートビュー（choiceButton）として共通化し、コードの重複を防いでいます。
-• アダプティブレイアウト
-minimumScaleFactor(0.5) を使って「おめでとう!」の文字が画面幅に応じて自動縮小するようにしたり、aspectRatio(1, contentMode: .fit) で3D描画領域を確実に正方形に保つなど、画面の小さな端末にも追従する実装が施されています。
+ダンジョンゲーム
+
+①SwiftUIの Canvas と switch
+
+使用ファイル：DungeonView.swift
+
+使用部分
+```swift
+var body: some View {
+    Canvas { ctx, size in
+        let f = Double(size.width) / 2
+        let cx = Double(size.width) / 2
+        let cy = Double(size.height) / 2
+        // 迷宮の壁や扉などを描画
+    }
+}
+```
+使用した文法・技術： SwiftUIの Canvas、switch 文
+
+使用方法： 描画用の座標や画像を使って迷宮を描き、プレイヤーの向きや鍵の取得状態に応じて表示する画像を切り替え。
+
+②深さ優先探索（DFS）と乱数シード
+
+使用ファイル：RandomMazeGenerator.swift
+
+使用部分
+```swift
+static func generate(seed: UInt64) -> MapData {
+    var random = SeededRandomNumberGenerator(seed: seed)
+
+    let start = nodes[
+        random.nextInt(upperBound: nodes.count)
+    ]
+
+    var visited: Set<GridPos> = [start]
+    var stack = [start]
+```
+使用した文法・技術： 関数、配列、Set、スタック、シード付き乱数
+
+使用方法： 部屋を探索しながら通路をつなぎ、迷宮を自動生成。シード値を利用することで、同じ条件から同じ迷宮を再現できる設計。
+
+しりとりゲーム
+
+①配列処理によるカード候補の抽出
+
+使用ファイル：CPUSelector.swift
+
+使用部分
+```swift
+let availableCards = cards.filter {
+    !$0.isCleared
+}
+
+let connectableCandidates =
+    availableCards.flatMap { card in
+        card.vocabularies.compactMap { vocabulary in
+            guard KanaNormalizer.firstCharacter(
+                of: vocabulary.word
+            ) == currentPrompt else {
+                return nil
+            }
+
+            return (card: card, vocabulary: vocabulary)
+        }
+    }
+```
+使用した文法・技術： filter、flatMap、compactMap、クロージャ
+
+使用方法： 取得済みカードを除外し、残ったカードの読みから、指定された文字で始まる候補だけを抽出する。
+
+②オプショナル型と guard
+
+使用ファイル：CPUSelector.swift
+
+使用部分
+```swift
+guard !connectableCandidates.isEmpty else {
+    return nil
+}
+```
+使用した文法・技術：guard 文、オプショナル型（?）、nil
+
+使用方法：CPUが選べる読みが存在するかを確認する。候補がなければ nil を返し、呼び出し側がCPUの敗北・プレイヤーの勝利処理へ進められるようにする。
+
 
 ## 生成AIの使い方（どの場面で、どう使ったか）
 
