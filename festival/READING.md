@@ -12,7 +12,8 @@
 
 ## 箇所1：（プレイヤーの移動処理について）
 
-```swiftfunc turnRight() {
+```swift
+func turnRight() {
     turn(to: state.player.direction.turnedRight, tutorialAction: .turnRight)
 }
 
