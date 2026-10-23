@@ -55,18 +55,26 @@ func turnAround()
 
 ---
 
-## 箇所2：（見出し）
+## 箇所2：（iOS 16への対応）
 
 ```swift
-// コードを貼る
+TextField(
+    "",
+    text: $playerName,
+    prompt: Text("プレイヤー名を入力")
+        .foregroundColor(Color.white.opacity(0.55))
+)
+    .font(DungeonTypography.maruMonica(size: 17))
+    .foregroundColor(.white)
 ```
 
 **何をしているか：**
-
+foregroundStyleを使用していた部分を、
+.foregroundColorに書き換えた
 **なぜこう書くのか：**
-
+iPhone8に対応させるため
 **もしこう書かなかったら：**
-
+iOS16のもので起動しない
 ---
 
 ## 箇所3：（見出し）
