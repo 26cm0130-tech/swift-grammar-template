@@ -82,16 +82,22 @@ iOS16のもので起動しない
 
 ## 箇所3：（見出し）
 
-```swift
-// コードを貼る
+```
+swift
+let isPad = IPadLayoutMetrics.isPad
+.frame(width: isPad ? 340 : 190)
+.padding(isPad ? 16 : 8)
+.font(.system(size: isPad ? 24 : 18))
 ```
 
 **何をしているか：**
+isPad が true ならiPad用、false ならiPhone用の値が適用される
 
 **なぜこう書くのか：**
+iPhone、iPad、両方に適応させるためのコードにしている
 
 **もしこう書かなかったら：**
-
+iPhone用、iPad用、二種類のアプリが必要になる
 ---
 
 ## 自分ではまだ説明できない箇所（正直に）
