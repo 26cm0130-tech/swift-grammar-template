@@ -24,22 +24,22 @@ for i in 0..<names.count {
 }
 
 **使ったプロンプト：**
-（生成AIに入力した文をそのまま貼る。自分で書いた場合は「自分で書いた」と書く）
-
-例：「Swift で、[Int] の配列から偶数だけを取り出して、それぞれ2乗した配列を返す関数を書いてください。関数名は squaredEvens にしてください」
+自分で書いた
 
 **AIの出力から自分が変えた点：**
-（何を、なぜ変えたか。変えていなければ「変えていない。理由は〜」）
-
-例：「引数ラベルが無かったので `of:` を付けた。教材コードの他の関数と揃えたかったから」
+自分で書いた
 
 **自分の言葉での説明（何を受け取り、何をして、何を返す）：**
-
-例：「`[Int]` を受け取り、偶数だけを残して2乗して、`[Int]` を返す」
+var passers: [String] = []で名前の配列
+for i in 0..<names.count {　で０から４まで
+if scores[i] >= scores[i] >= 60　
+passers.append(names[i])　で６０点以上のiの番号の名前をpassersにappendする
 
 **壊す実験（何を変えたら、何が起きたか）：**
+for i in 0..<names.count {を、
+for i in 1..<names.count { にした。
+0 番目のデータの電子太郎・82点が飛ばされてピックされるのが３名になる
 
-例：「`filter` の行を消したら奇数も2乗されて `[1, 4, 9, 16]` になった。`% 2 == 0` を `% 2 == 1` にしたら奇数だけになった」
 
 ### 演習2：（演習の名前）
 var highScorers = 0
@@ -50,21 +50,29 @@ for score in scoreOf.values {
 }
 
 **使ったプロンプト：**
-
+自分で書いた
 **AIの出力から自分が変えた点：**
-
+自分で書いた
 **自分の言葉での説明（何を受け取り、何をして、何を返す）：**
+var highScorers = 0　で初期値０
+for score in scoreOf.values { で　scoreOf　の右側（点数）だけを見て
+    if score >= 80 {
+        highScorers += 1　で80以上のscoreがあったらhighScorersに＋１
 
 **壊す実験（何を変えたら、何が起きたか）：**
+var highScorers = 0
+for score in scoreOf.keys {
+    if score >= 80 {
+        highScorers += 1
+    だと、StringとIntでコンパイルエラー
 
 ## 3. AI質問ログ
-
-使った生成AI：（例：ChatGPT 無料版、Xcode の ChatGPT、Claude 無料版）
+なし
 
 ### Q1
 
 **質問：**
-（生成AIに聞いた質問をそのまま書く。「この行を消すとどうなる？」型の質問を週に1つ以上入れる）
+
 
 **AIの回答の要点：**
 （長い回答は、要点だけ自分の言葉でまとめる）
