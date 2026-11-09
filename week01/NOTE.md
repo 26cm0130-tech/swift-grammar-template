@@ -1,8 +1,11 @@
 # week01 型と制御構文の再確認、配列・辞書・範囲
 
 > **氏名：** 三浦崇志
+> 
 > **最終更新：** 2026-11-09
+> 
 > **AI利用レベル：** 演習は 2（生成コード可・4点セット必須）
+> 
 > **リファレンス：** swift-grammar-code の https://raw.githubusercontent.com/NakasenJEC/swift-grammar-code/refs/heads/main/week01/main.swift
 
 ---
