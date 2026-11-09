@@ -8,12 +8,20 @@
 ---
 
 ## 1. 教材コードで読めたこと（3行）
-
-（月曜に教材コードの「読む」と書かれている部分を読んで分かったことを、自分の言葉で3行。例：「`let` は一度決めたら変えられない。`var` は変えられる。Java の `final` に近いが、Swift では `let` が基本」）
+let を使用した　className は "1CM1"　のまま変更されない
+var を使用した　updateCount は　updateCount += 1　により変更される（初期値はなぜか１なので、現状必ず2回目の更新からはじまる）
+switch case default で、点数によって表示されるテキストが変わる
 
 ## 2. 演習の記録（4点セット）
 
 ### 演習1：（演習の名前）
+
+var passers: [String] = []
+for i in 0..<names.count {
+    if scores[i] >= scores[i] >= 60
+        passers.append(names[i])
+    }
+}
 
 **使ったプロンプト：**
 （生成AIに入力した文をそのまま貼る。自分で書いた場合は「自分で書いた」と書く）
@@ -34,6 +42,12 @@
 例：「`filter` の行を消したら奇数も2乗されて `[1, 4, 9, 16]` になった。`% 2 == 0` を `% 2 == 1` にしたら奇数だけになった」
 
 ### 演習2：（演習の名前）
+var highScorers = 0
+for score in scoreOf.values {
+    if score >= 80 {
+        highScorers += 1
+    }
+}
 
 **使ったプロンプト：**
 
@@ -67,7 +81,12 @@
 **自分の理解：**
 
 ### Q3
-
+var total = 0
+var average = 0.0
+for score in scores {
+    total += score
+}
+average = Double(total) / Double(scores.count)
 **質問：**
 
 **AIの回答の要点：**
