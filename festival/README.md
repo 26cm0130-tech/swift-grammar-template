@@ -115,4 +115,4 @@ guard !connectableCandidates.isEmpty else {
 
 ## 展示で工夫した点
 
-（例：文字を大きくして、来場者が操作しやすいようにした。）
+指示通りにポスター、説明書を作成したのみ
