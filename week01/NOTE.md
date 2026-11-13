@@ -114,7 +114,7 @@ var total = 0　がトータル
 var average = 0.0　が平均
 for score in scores {　
     total += score
-} で、配列scoresの中から一つずつ数字をscoreに入れてトータルに積み重ねていく
+} で、配列scoresの中から一つずつ数字をscoreに入れてトータルに積み重ねていく（forの中のscoreは一時的な変数で勝手に宣言されている）
 average = Double(total) / Double(scores.count)　でIntにダブルをつけて平均を出す
 ```
 
