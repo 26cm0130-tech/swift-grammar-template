@@ -91,6 +91,43 @@ for score in scoreOf.keys {
     だと、StringとIntでコンパイルエラー
 ```
 
+### 演習3：（演習の名前）
+```swift
+var total = 0
+var average = 0.0
+for score in scores {
+    total += score
+}
+average = Double(total) / Double(scores.count)
+```
+**使ったプロンプト：**
+
+自分で書いた
+
+**AIの出力から自分が変えた点：**
+
+自分で書いた
+
+**自分の言葉での説明（何を受け取り、何をして、何を返す）：**
+```swift
+var total = 0　がトータル
+var average = 0.0　が平均
+for score in scores {　
+    total += score
+} で、配列scoresの中から一つずつ数字をscoreに入れてトータルに積み重ねていく
+average = Double(total) / Double(scores.count)　でIntにダブルをつけて平均を出す
+```
+
+**壊す実験（何を変えたら、何が起きたか）：**
+```swift
+average = total / Double(scores.count)
+だとコンパイルエラー。
+var total = 0.0にすれば通るが。scoreとscores.countがintなので、
+どのみちDoubleという入力は片方にしなければいけない。
+```
+
+
+
 ## 3. AI質問ログ
 
 なし
