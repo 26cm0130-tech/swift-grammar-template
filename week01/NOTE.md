@@ -2,7 +2,7 @@
 
 > **氏名：** 三浦崇志
 > 
-> **最終更新：** 2026-11-09
+> **最終更新：** 2026-11-13
 > 
 > **AI利用レベル：** 演習は 2（生成コード可・4点セット必須）
 > 
@@ -24,7 +24,7 @@ switch case default で、点数によって表示されるテキストが変わ
 ```swift
 var passers: [String] = []
 for i in 0..<names.count {
-    if scores[i] >= scores[i] >= 60
+    if scores[i]  >= 60
         passers.append(names[i])
     }
 }
@@ -44,7 +44,7 @@ var passers: [String] = []で名前の配列
 
 for i in 0..<names.count {　で０から４まで
 
-if scores[i] >= scores[i] >= 60　
+if scores[i]  >= 60　
 
 passers.append(names[i])　で６０点以上のiの番号の名前をpassersにappendする
 
