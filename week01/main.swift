@@ -1,6 +1,3 @@
-// week01 の演習を終えた main.swift を、このファイルに Upload files で上書きしてください。
-// 教材コードは swift-grammar-code の week01/main.swift を Raw 表示から全選択コピーして Xcode に貼ります。
-
 // week01: 型と制御構文の再確認、配列・辞書・範囲
 // このプログラムは、1CM1 の成績を並べ替えたり、合格した人を数えたり、
 // 名前から点数を引いたりします。
@@ -120,6 +117,9 @@ for (name, score) in scoreOf {
 // 次の行はコメントのままにしてあります。単元2（Optional）で外します
 // print(scoreOf["電子太郎"])
 
+
+
+
 // MARK: - 演習
 
 // 演習1: 60点以上だった人の名前を、names の並び順のまま passers に集めてください
@@ -176,4 +176,43 @@ check("演習3 平均は72.0", average == 72.0)
 //  多分岐            switch (x) { case 1: ... break; }   switch x { case 1: ... }
 //                    break を書かないと次に落ちる           break は不要。網羅していないとエラー
 //  暗黙の型変換       int から double は自動               自動変換なし。Double(n) と書く
+
+
+var failers: [String] = []
+for i in 0..<names.count {
+    if scores[i] < 60 {
+        failers.append(names[i])
+    }
+}
+print(failers)
+
+
+var failCount = 0
+for score in scores {
+    if score < 60 {
+        failCount += 1
+    }
+}
+print(failCount)
+
+
+var lowCount = 0
+for (name, score) in scoreOf {
+    if score < 70 {
+        print(name)
+        lowCount += 1
+    }
+}
+print(lowCount)   // 2
+
+
+let absences = [0, 2, 1, 5, 0]
+var absenceTotal = 0
+for absence in absences {
+    absenceTotal += absence
+}
+let absenceAverage = Double(absenceTotal) / Double(absences.count)
+print(absenceTotal, absenceAverage)   // 8 1.6
+
+
 
