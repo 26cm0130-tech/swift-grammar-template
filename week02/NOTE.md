@@ -12,19 +12,53 @@
 
 ## 1. 教材コードで読めたこと（3行）
 
-（月曜に教材コードの「読む」と書かれている部分を読んで分かったことを、自分の言葉で3行。Java との違いに気づいたら、それも書く）
+print(type(of: taroScore))    // Int ではありません
+
+print(type(of: suzukiScore))
+
+type(of: 変数) は、その変数が何型なのかを調べる。
+
+let scoreOf: [String: Int] = [
+    "電子太郎": 82,
+    "電子花子": 55,
+    "山田一郎": 91,
+    "佐藤みなみ": 60,
+    "グエン・アン": 72,
+]
+
+let taroScore = scoreOf["電子太郎"]
+let suzukiScore = scoreOf["鈴木"]
+
+までの情報から、82・・・などというIntで登録されている部分なので、
+
+値の有無に関わらず、 Optional<Int>と出力される。
+
+print(String(describing: taroScore))
+print(String(describing: suzukiScore))
+
+String(describing: ...) は、値の状態をそのまま文字列に変換して表示するための記述で
+
+Optional(82)、nil
+
+と表示される。文字列なので、数字ではなく、計算はできない。
+
+• type(of:) で見ているのは「型の種類」（どちらも Int という型 ＝ Optional<Int>）
+
+• String(describing:) で見ているのは「型の中身」（82 が入った型 Optional(82) か、空の型 nil か）
 
 ## 2. 演習の記録（4点セット）
 
 ### 演習1：（演習の名前）
 
 **使ったプロンプト：**
-（生成AIに入力した文をそのまま貼る。自分で書いた場合は「自分で書いた」と書く）
 
+自分で書いた
 
 **AIの出力から自分が変えた点：**
-（何を、なぜ変えたか。変えていなければ「変えていない。理由は〜」）
 
+yamadaScore = scoreOf["山田一郎"] ?? 0
+
+suzukiPoint = scoreOf["鈴木"] ?? 0
 
 **自分の言葉での説明（何を受け取り、何をして、何を返す）：**
 
