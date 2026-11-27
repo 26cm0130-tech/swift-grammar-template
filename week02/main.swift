@@ -235,3 +235,41 @@ if let score = scoreOf[student] {
 } else {
     print("名簿にありません")
 }
+
+let friend = "佐藤みなみ"
+if let score = scoreOf[friend] {
+    print("\(friend) は \(score) 点です")
+} else {
+    print("\(friend)は名簿にありません")
+}
+
+let guest = "高橋"
+if let score = scoreOf[guest] {
+    print("\(guest)は \(score) 点です")
+} else {
+    print("\(guest)は名簿にありません")
+}
+
+let member = "グエン・アン"
+if let score = scoreOf[member] {
+    print("\(member) は \(score) 点です")
+} else {
+    print("\(member)は名簿にありません")
+}
+
+let guestScore = scoreOf["鈴木"] ?? 0
+print(guestScore)             // 0
+print(type(of: guestScore))   // Int
+
+let taroPoint = scoreOf["電子太郎"] ?? 0
+print(taroPoint)              // 82
+
+let visitors = ["山田一郎", "高橋", "電子花子"]
+var visitorTotal = 0
+for visitor in visitors {
+    if let score = scoreOf[visitor] {
+        print("\(visitor)は \(score) 点です")
+        visitorTotal += score
+    }
+}
+print(visitorTotal)
