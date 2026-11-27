@@ -113,8 +113,8 @@ print(describe(name: "鈴木", in: scoreOf))
 // 演習1: ?? を使って、山田一郎と鈴木の点数を取り出してください
 //        名簿に無い人は 0 点として扱います
 
-var yamadaScore = -1
-var suzukiPoint = -1
+var yamadaScore = 0
+var suzukiPoint = 0
 // ここに書く
 
 yamadaScore = scoreOf["山田一郎"] ?? 0
